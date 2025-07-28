@@ -27,6 +27,7 @@ type Server struct {
 //
 // RegisterRoutes attaches HTTP handlers to the router
 func RegisterRoutes(r *mux.Router, storage domain.Storage) {
+	r.Use(loggingMiddleware)
 	r.HandleFunc("/objects/{bucket}/{objectID}", putObjectHandler(storage)).Methods("PUT")
 	r.HandleFunc("/objects/{bucket}/{objectID}", getObjectHandler(storage)).Methods("GET")
 	r.HandleFunc("/objects/{bucket}/{objectID}", deleteObjectHandler(storage)).Methods("DELETE")
@@ -59,4 +60,11 @@ func (s *Server) Start() error {
 // setupSwagger adds Swagger UI handler on /docs/
 func (s *Server) setupSwagger() {
 	s.router.PathPrefix("/docs/").Handler(httpSwagger.WrapHandler)
+}
+
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("[%s] %s %s", r.RemoteAddr, r.Method, r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
 }
