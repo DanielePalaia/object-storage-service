@@ -12,7 +12,7 @@ A simple HTTP service in Go for storing, retrieving, and deleting objects by buc
 - In-memory storage implementation (extensible for other storage backends)
 - Swagger/OpenAPI documentation included
 - Tested with unit and integration tests
-- Dockerized for easy deployment
+- Dockerized for easy deployment (ex Kubernetes)
 
 ---
 
