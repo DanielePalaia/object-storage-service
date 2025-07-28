@@ -87,9 +87,11 @@ http://localhost:8080/swagger/index.html
 
 | Method | Endpoint                    | Description                  | Response Status         |
 |--------|-----------------------------|------------------------------|------------------------|
-| PUT    | `/objects/{bucket}/{objectID}` | Upload an object             | 201 Created            |
+| PUT    | `/objects/{bucket}/{objectID}` | Upload and updatean object   | 201 Created            |
 | GET    | `/objects/{bucket}/{objectID}` | Download an object           | 200 OK or 404 Not Found |
 | DELETE | `/objects/{bucket}/{objectID}` | Delete an object             | 200 OK or 404 Not Found |
+
+### For Not found in the spec was specified to use 400 but actually 404 is more appropriate
 
 ---
 
@@ -114,11 +116,16 @@ Planned integration via GitHub Actions: This is the first thing I would do in or
 
 ### ⚙️ Scalability
 
-- Container orchestration with **Kubernetes** / improving datastore
+- Container orchestration with **Kubernetes** / improving datastore to be fully stateless
 
 ## Use of AI Tools
 
-_TODO: Please document any AI assistance used in development here._
+I used chatgtp in order to be more efficient on some of the work:
+
+- Swagger integration with annotations
+- Creation of Makefile and Dockerfile
+- First draft on the unit/integration tests
+- Some verifications after the project was implemented to see if specs were complied. 
 
 ---
 
