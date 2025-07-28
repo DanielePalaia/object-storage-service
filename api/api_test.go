@@ -146,3 +146,39 @@ func TestDeleteObject(t *testing.T) {
 		t.Errorf("expected status 400 or 404 for deleting nonexistent; got %d", respNF.StatusCode)
 	}
 }
+
+func TestPut_DeDuplicateAndOverwrite(t *testing.T) {
+	server, storage := setupTestServer()
+	ts := httptest.NewServer(server.router)
+	defer ts.Close()
+
+	// First insert — should succeed
+	ok, err := storage.Put("bucket1", "obj1", []byte("original"))
+	if err != nil || !ok {
+		t.Fatalf("expected first insert to succeed, got err: %v", err)
+	}
+
+	// Duplicate insert with same content — should deduplicate silently (no error, ok = false)
+	ok, err = storage.Put("bucket1", "obj1", []byte("original"))
+	if err != nil {
+		t.Fatalf("expected no error on duplicate data, got: %v", err)
+	}
+	if ok {
+		t.Fatalf("expected ok=false on duplicate data, got true")
+	}
+
+	// Insert with same ID but different content — should overwrite successfully
+	ok, err = storage.Put("bucket1", "obj1", []byte("updated"))
+	if err != nil || !ok {
+		t.Fatalf("expected overwrite to succeed, got err: %v", err)
+	}
+
+	// Validate content was updated
+	data, err := storage.Get("bucket1", "obj1")
+	if err != nil {
+		t.Fatalf("expected get to succeed, got err: %v", err)
+	}
+	if !bytes.Equal(data, []byte("updated")) {
+		t.Fatalf("expected updated content, got: %s", data)
+	}
+}

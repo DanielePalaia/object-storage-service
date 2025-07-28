@@ -1,6 +1,7 @@
 package persistence
 
 import (
+	"bytes"
 	"sync"
 
 	"github.com/yourusername/object-storage-service/domain"
@@ -27,11 +28,14 @@ func (s *InMemoryStorage) Put(bucket, objectID string, data []byte) (bool, error
 		s.buckets[bucket] = make(map[string][]byte)
 	}
 
-	if _, exists := s.buckets[bucket][objectID]; exists {
-		return false, domain.ErrAlreadyExist
+	if existing, exists := s.buckets[bucket][objectID]; exists {
+		if bytes.Equal(existing, data) {
+			// Data is identical — deduplicate silently, no error
+			return false, nil
+		}
+		// Overwrite with new content below
 	}
 
-	// Store the object
 	s.buckets[bucket][objectID] = data
 	return true, nil
 }

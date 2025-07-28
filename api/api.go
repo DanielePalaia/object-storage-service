@@ -50,7 +50,7 @@ func putObjectHandler(storage domain.Storage) http.HandlerFunc {
 		defer r.Body.Close()
 
 		_, err = storage.Put(bucket, objectID, data)
-		if err != nil && err != domain.ErrAlreadyExist {
+		if err != nil {
 			http.Error(w, "internal server error", http.StatusInternalServerError)
 			return
 		}
