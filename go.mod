@@ -1,4 +1,4 @@
-module github.com/yourusername/object-storage-service
+module github.com/DanielePalaia/object-storage-service
 
 go 1.23.0
 

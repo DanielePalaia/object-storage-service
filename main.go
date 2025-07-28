@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/yourusername/object-storage-service/api"
-	"github.com/yourusername/object-storage-service/persistence"
+	"github.com/DanielePalaia/object-storage-service/api"
+	"github.com/DanielePalaia/object-storage-service/persistence"
 )
 
 func main() {

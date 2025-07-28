@@ -4,11 +4,11 @@ import (
 	"log"
 	"net/http"
 
+	_ "github.com/DanielePalaia/object-storage-service/docs"
 	"github.com/gorilla/mux"
 	httpSwagger "github.com/swaggo/http-swagger"
-	_ "github.com/yourusername/object-storage-service/docs" // Replace with your module path
 
-	"github.com/yourusername/object-storage-service/domain"
+	"github.com/DanielePalaia/object-storage-service/domain"
 )
 
 type Server struct {

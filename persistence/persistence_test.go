@@ -6,7 +6,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/yourusername/object-storage-service/domain"
+	"github.com/DanielePalaia/object-storage-service/domain"
 )
 
 func TestInMemoryStorage_PutGetDelete(t *testing.T) {
