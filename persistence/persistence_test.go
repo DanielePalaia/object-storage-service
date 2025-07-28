@@ -2,7 +2,11 @@ package persistence
 
 import (
 	"bytes"
+	"fmt"
+	"sync"
 	"testing"
+
+	"github.com/yourusername/object-storage-service/domain"
 )
 
 func TestInMemoryStorage_PutGetDelete(t *testing.T) {
@@ -78,5 +82,37 @@ func TestInMemoryStorage_Deduplication(t *testing.T) {
 	}
 	if !bytes.Equal(got, data3) {
 		t.Errorf("Get returned wrong data after overwrite: got %q want %q", got, data3)
+	}
+}
+
+func TestInMemoryStorage_ConcurrentAccess(t *testing.T) {
+	storage := NewInMemoryStorage()
+	bucket := "concurrent-bucket"
+
+	var wg sync.WaitGroup
+	numOps := 100
+
+	for i := 0; i < numOps; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			objectID := fmt.Sprintf("obj-%d", i)
+			data := []byte(fmt.Sprintf("data-%d", i))
+			_, err := storage.Put(bucket, objectID, data)
+			if err != nil && err != domain.ErrAlreadyExist {
+				t.Errorf("unexpected error during concurrent Put: %v", err)
+			}
+		}(i)
+	}
+
+	wg.Wait()
+
+	// Validate all objects exist
+	for i := 0; i < numOps; i++ {
+		objectID := fmt.Sprintf("obj-%d", i)
+		_, err := storage.Get(bucket, objectID)
+		if err != nil {
+			t.Errorf("missing object after concurrent writes: %s", objectID)
+		}
 	}
 }

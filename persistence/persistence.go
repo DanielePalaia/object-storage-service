@@ -19,7 +19,7 @@ func NewInMemoryStorage() *InMemoryStorage {
 	}
 }
 
-// Put stores the object if it doesn't already exist in the bucket
+// Put stores the object if it doesn't already exist in the bucket otherwise it updates it
 func (s *InMemoryStorage) Put(bucket, objectID string, data []byte) (bool, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -30,10 +30,8 @@ func (s *InMemoryStorage) Put(bucket, objectID string, data []byte) (bool, error
 
 	if existing, exists := s.buckets[bucket][objectID]; exists {
 		if bytes.Equal(existing, data) {
-			// Data is identical — deduplicate silently, no error
 			return false, nil
 		}
-		// Overwrite with new content below
 	}
 
 	s.buckets[bucket][objectID] = data

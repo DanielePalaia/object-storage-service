@@ -8,21 +8,6 @@ import (
 	"github.com/yourusername/object-storage-service/domain"
 )
 
-// Package api implements HTTP handlers.
-//
-// @title Object Storage Service API
-// @version 1.0
-// @description API for storing, retrieving, and deleting objects.
-// @host localhost:8080
-// @BasePath /
-//
-// RegisterRoutes attaches HTTP handlers to the router
-func RegisterRoutes(r *mux.Router, storage domain.Storage) {
-	r.HandleFunc("/objects/{bucket}/{objectID}", putObjectHandler(storage)).Methods("PUT")
-	r.HandleFunc("/objects/{bucket}/{objectID}", getObjectHandler(storage)).Methods("GET")
-	r.HandleFunc("/objects/{bucket}/{objectID}", deleteObjectHandler(storage)).Methods("DELETE")
-}
-
 // putObjectHandler uploads an object to a bucket.
 // @Summary Upload an object
 // @Description Upload an object to the specified bucket with objectID.
