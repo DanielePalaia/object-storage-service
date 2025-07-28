@@ -91,9 +91,9 @@ http://localhost:8080/swagger/index.html
 | GET    | `/objects/{bucket}/{objectID}` | Download an object           | 200 OK or 404 Not Found |
 | DELETE | `/objects/{bucket}/{objectID}` | Delete an object             | 200 OK or 404 Not Found |
 
-Also a basic /health entrypoint has been provided in order to check for the state of the service (useful for a load balancer for example or for generic status check)
+**Basic Observability** Also a basic /health entrypoint has been provided in order to check for the state of the service (useful for a load balancer for example or for generic status check)
 
-### For Not found in the spec was specified to use 400 but actually 404 is more appropriate
+**For Not found in the spec was specified to use 400 but actually 404 is more appropriate**
 
 ---
 
