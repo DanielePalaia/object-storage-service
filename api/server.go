@@ -17,6 +17,21 @@ type Server struct {
 	port    string
 }
 
+// Package api implements HTTP handlers.
+//
+// @title Object Storage Service API
+// @version 1.0
+// @description API for storing, retrieving, and deleting objects.
+// @host localhost:8080
+// @BasePath /
+//
+// RegisterRoutes attaches HTTP handlers to the router
+func RegisterRoutes(r *mux.Router, storage domain.Storage) {
+	r.HandleFunc("/objects/{bucket}/{objectID}", putObjectHandler(storage)).Methods("PUT")
+	r.HandleFunc("/objects/{bucket}/{objectID}", getObjectHandler(storage)).Methods("GET")
+	r.HandleFunc("/objects/{bucket}/{objectID}", deleteObjectHandler(storage)).Methods("DELETE")
+}
+
 // NewServer creates a new server instance with storage and port config
 func NewServer(storage domain.Storage, port string) *Server {
 	s := &Server{
