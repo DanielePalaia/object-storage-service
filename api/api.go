@@ -2,6 +2,7 @@ package api
 
 import (
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -29,6 +30,7 @@ func putObjectHandler(storage domain.Storage) http.HandlerFunc {
 
 		data, err := io.ReadAll(r.Body)
 		if err != nil {
+			log.Println("Request error:", err)
 			http.Error(w, "unable to read request body", http.StatusBadRequest)
 			return
 		}
@@ -36,6 +38,7 @@ func putObjectHandler(storage domain.Storage) http.HandlerFunc {
 
 		_, err = storage.Put(bucket, objectID, data)
 		if err != nil {
+			log.Println("Request error:", err)
 			http.Error(w, "internal server error", http.StatusInternalServerError)
 			return
 		}
@@ -64,6 +67,7 @@ func getObjectHandler(storage domain.Storage) http.HandlerFunc {
 
 		data, err := storage.Get(bucket, objectID)
 		if err != nil {
+			log.Println("Request error:", err)
 			http.Error(w, "object not found", http.StatusNotFound)
 			return
 		}
@@ -91,6 +95,7 @@ func deleteObjectHandler(storage domain.Storage) http.HandlerFunc {
 
 		err := storage.Delete(bucket, objectID)
 		if err != nil {
+			log.Println("Request error:", err)
 			http.Error(w, "object not found", http.StatusNotFound)
 			return
 		}
