@@ -1,0 +1,98 @@
+info:
+  contact: {}
+paths:
+  /objects/{bucket}/{objectID}:
+    delete:
+      description: Delete an object by bucket and objectID.
+      parameters:
+      - description: Bucket name
+        in: path
+        name: bucket
+        required: true
+        type: string
+      - description: Object ID
+        in: path
+        name: objectID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Deleted
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Delete an object
+      tags:
+      - objects
+    get:
+      description: Download an object by bucket and objectID.
+      parameters:
+      - description: Bucket name
+        in: path
+        name: bucket
+        required: true
+        type: string
+      - description: Object ID
+        in: path
+        name: objectID
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Object data
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Download an object
+      tags:
+      - objects
+    put:
+      consumes:
+      - application/octet-stream
+      description: Upload an object to the specified bucket with objectID.
+      parameters:
+      - description: Bucket name
+        in: path
+        name: bucket
+        required: true
+        type: string
+      - description: Object ID
+        in: path
+        name: objectID
+        required: true
+        type: string
+      - description: Object data
+        in: body
+        name: data
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Upload an object
+      tags:
+      - objects
+swagger: "2.0"
