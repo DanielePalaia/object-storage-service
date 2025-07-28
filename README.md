@@ -32,6 +32,10 @@ A simple HTTP service in Go for storing, retrieving, and deleting objects by buc
 └── README.md
 ```
 
+The package structure should allow to have a clean web architecture where persistence, business and domain logic are separate (using dependency injection when needed) 
+gorilla framework was used jst to manage routes.
+
+
 ---
 
 ## Installation & Setup
