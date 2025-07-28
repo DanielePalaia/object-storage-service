@@ -30,6 +30,7 @@ func RegisterRoutes(r *mux.Router, storage domain.Storage) {
 	r.HandleFunc("/objects/{bucket}/{objectID}", putObjectHandler(storage)).Methods("PUT")
 	r.HandleFunc("/objects/{bucket}/{objectID}", getObjectHandler(storage)).Methods("GET")
 	r.HandleFunc("/objects/{bucket}/{objectID}", deleteObjectHandler(storage)).Methods("DELETE")
+	r.HandleFunc("/health", HealthHandler).Methods("GET")
 }
 
 // NewServer creates a new server instance with storage and port config
