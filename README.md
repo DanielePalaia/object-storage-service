@@ -91,6 +91,8 @@ http://localhost:8080/swagger/index.html
 | GET    | `/objects/{bucket}/{objectID}` | Download an object           | 200 OK or 404 Not Found |
 | DELETE | `/objects/{bucket}/{objectID}` | Delete an object             | 200 OK or 404 Not Found |
 
+Also a basic /health entrypoint has been provided in order to check for the state of the service (useful for a load balancer for example or for generic status check)
+
 ### For Not found in the spec was specified to use 400 but actually 404 is more appropriate
 
 ---
@@ -112,11 +114,11 @@ Planned integration via GitHub Actions: This is the first thing I would do in or
 ### 📈 Observability
 
 - Integrate **Prometheus** metrics (like number of requests validated or failed). A new /metrics endpoint will be needed together with the integration of the Prometheus API.
-- Add **OpenTelemetry** tracing for request flows
+- Add **OpenTelemetry** tracing for request flows always more requested by customers and Open source community
 
 ### ⚙️ Scalability
 
-- Container orchestration with **Kubernetes** / improving datastore to be fully stateless
+- Container orchestration with **Kubernetes** / improving datastore to be fully stateless. Deployment can be automated by a github action or using gitops tools (ex. ArgoCD)
 
 ## Use of AI Tools
 
@@ -125,7 +127,9 @@ I used chatgtp in order to be more efficient on some of the work:
 - Swagger integration with annotations
 - Creation of Makefile and Dockerfile
 - First draft on the unit/integration tests
-- Some verifications after the project was implemented to see if specs were complied. 
+- Some verifications after the project was implemented to see if specs were complied.
+
+In general I just asked for support to increase productivity keeping implementation in my control
 
 ---
 
