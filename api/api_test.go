@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/yourusername/object-storage-service/domain"
-	"github.com/yourusername/object-storage-service/persistence"
+	"github.com/DanielePalaia/object-storage-service/domain"
+	"github.com/DanielePalaia/object-storage-service/persistence"
 )
 
 func setupTestServer() (*Server, domain.Storage) {

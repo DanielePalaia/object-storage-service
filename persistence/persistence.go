@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"sync"
 
-	"github.com/yourusername/object-storage-service/domain"
+	"github.com/DanielePalaia/object-storage-service/domain"
 )
 
 type InMemoryStorage struct {

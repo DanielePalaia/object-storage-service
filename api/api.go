@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/DanielePalaia/object-storage-service/domain"
 	"github.com/gorilla/mux"
-	"github.com/yourusername/object-storage-service/domain"
 )
 
 // putObjectHandler uploads an object to a bucket.
