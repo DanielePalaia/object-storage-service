@@ -81,12 +81,6 @@ Swagger UI is available at:
 http://localhost:8080/swagger/index.html
 ```
 
-To regenerate docs after modifying annotations:
-
-```bash
-swag init
-```
-
 ---
 
 ## API Endpoints
@@ -98,6 +92,29 @@ swag init
 | DELETE | `/objects/{bucket}/{objectID}` | Delete an object             | 200 OK or 404 Not Found |
 
 ---
+
+## Extensions and future improvements
+
+### 🔄 CI/CD
+
+Planned integration via GitHub Actions: This is the first thing I would do in order to test the codebase on new PRs and new code and maybe publish in a docker registry in order eventually to be run in a Kubernetes deployment and scale.
+- ✅ `go fmt` formatting checks
+- ✅ `go vet` and vulnerability scan (`govulncheck`)
+- ✅ Unit test execution with coverage
+- ✅ Docker image build & push to Docker Hub
+
+### 💾 Persistence
+
+- Replace in-memory store with **Redis** or **PostgreSQL**: At the moment the project is implementing with a GO map which is not ideal at all. I just used this approach to save time. Better to replace it with an external datastore in order to make the microservice stateless and allow them to scale more and manage concourrency.
+
+### 📈 Observability
+
+- Integrate **Prometheus** metrics (like number of requests validated or failed). A new /metrics endpoint will be needed together with the integration of the Prometheus API.
+- Add **OpenTelemetry** tracing for request flows
+
+### ⚙️ Scalability
+
+- Container orchestration with **Kubernetes** / improving datastore
 
 ## Use of AI Tools
 
